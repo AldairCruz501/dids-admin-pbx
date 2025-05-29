@@ -32,10 +32,10 @@ onMounted(() => {
           <CNavLink href="/dashboard"> Dashboard </CNavLink>
         </CNavItem>
         <CNavItem>
-          <CNavLink href="#">Users</CNavLink>
+          <CNavLink href="#">DID´s</CNavLink>
         </CNavItem>
         <CNavItem>
-          <CNavLink href="#">Settings</CNavLink>
+          <CNavLink href="#">Troncales</CNavLink>
         </CNavItem>
       </CHeaderNav>
       <CHeaderNav class="ms-auto">
