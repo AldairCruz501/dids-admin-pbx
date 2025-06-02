@@ -35,3 +35,13 @@ onMounted(() => {
     </CBreadcrumbItem>
   </CBreadcrumb>
 </template>
+
+<style>
+.breadcrumb-item a {
+  color: #02a6a3 !important;
+}
+
+.breadcrumb-item a:hover {
+  color: #027373!important;
+}
+</style>

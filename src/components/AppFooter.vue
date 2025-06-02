@@ -12,3 +12,13 @@
     </div>
   </CFooter>
 </template>
+
+<style scoped>
+a {
+  color: #02a6a3 !important;
+}
+
+a:hover {
+  color: #027373!important;
+}
+</style>

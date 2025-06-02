@@ -29,7 +29,7 @@ onMounted(() => {
       </CHeaderToggler>
       <CHeaderNav class="d-none d-md-flex">
         <CNavItem>
-          <CNavLink href="/dashboard"> Dashboard </CNavLink>
+          <CNavLink href="/dashboard"> Bienvenido </CNavLink>
         </CNavItem>
         <CNavItem>
           <CNavLink href="#">DID´s</CNavLink>
@@ -73,7 +73,7 @@ onMounted(() => {
               type="button"
               @click="setColorMode('light')"
             >
-              <CIcon class="me-2" icon="cil-sun" size="lg" /> Light
+              <CIcon class="me-2" icon="cil-sun" size="lg" /> Claro
             </CDropdownItem>
             <CDropdownItem
               :active="colorMode === 'dark'"
@@ -82,7 +82,7 @@ onMounted(() => {
               type="button"
               @click="setColorMode('dark')"
             >
-              <CIcon class="me-2" icon="cil-moon" size="lg" /> Dark
+              <CIcon class="me-2" icon="cil-moon" size="lg" /> Oscuro
             </CDropdownItem>
             <CDropdownItem
               :active="colorMode === 'auto'"

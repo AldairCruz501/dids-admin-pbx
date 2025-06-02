@@ -10,7 +10,7 @@ const itemsCount = 42
       <CAvatar :src="avatar" size="md" />
     </CDropdownToggle>
     <CDropdownMenu class="pt-0">
-      <CDropdownHeader
+      <!-- <CDropdownHeader
         component="h6"
         class="bg-body-secondary text-body-secondary fw-semibold mb-2 rounded-top"
       >
@@ -31,26 +31,25 @@ const itemsCount = 42
       <CDropdownItem>
         <CIcon icon="cil-comment-square" /> Comments
         <CBadge color="warning" class="ms-auto">{{ itemsCount }}</CBadge>
-      </CDropdownItem>
+      </CDropdownItem> -->
       <CDropdownHeader
         component="h6"
         class="bg-body-secondary text-body-secondary fw-semibold my-2"
       >
-        Settings
+        Cuenta
       </CDropdownHeader>
-      <CDropdownItem> <CIcon icon="cil-user" /> Profile </CDropdownItem>
-      <CDropdownItem> <CIcon icon="cil-settings" /> Settings </CDropdownItem>
-      <CDropdownItem>
+      <CDropdownItem> <CIcon icon="cil-user" /> Pérfil </CDropdownItem>
+      <CDropdownItem> <CIcon icon="cil-settings" /> Configuración </CDropdownItem>
+      <!-- <CDropdownItem>
         <CIcon icon="cil-dollar" /> Payments
         <CBadge color="secondary" class="ms-auto">{{ itemsCount }}</CBadge>
       </CDropdownItem>
       <CDropdownItem>
         <CIcon icon="cil-file" /> Projects
         <CBadge color="primary" class="ms-auto">{{ itemsCount }}</CBadge>
-      </CDropdownItem>
+      </CDropdownItem> -->
       <CDropdownDivider />
-      <CDropdownItem> <CIcon icon="cil-shield-alt" /> Lock Account </CDropdownItem>
-      <CDropdownItem> <CIcon icon="cil-lock-locked" /> Logout </CDropdownItem>
+      <CDropdownItem> <CIcon icon="cil-lock-locked" /> Cerrar Sesión </CDropdownItem>
     </CDropdownMenu>
   </CDropdown>
 </template>
