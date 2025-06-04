@@ -1,5 +1,5 @@
 <script setup>
-import WidgetsStatsD from './../widgets/WidgetsStatsTypeD.vue'
+
 
 </script>
 
@@ -14,7 +14,7 @@ import WidgetsStatsD from './../widgets/WidgetsStatsTypeD.vue'
           <CCardBody>
             <CCarousel indicators>
               <CCarouselItem>
-                <div class="container m-4">
+                <div class="container h-100">
                   <div class="row align-items-center">
                     <div class="col-12 col-lg-6 mb-4">
                       <h1 class="fs-3 fw-bold text-body-emphasis lh-1 mb-3">Obtén tu número DID en segundos<span class="text-empresary"></span></h1>
@@ -35,7 +35,7 @@ import WidgetsStatsD from './../widgets/WidgetsStatsTypeD.vue'
                 </div>
               </CCarouselItem>
               <CCarouselItem>
-                <div class="container m-4">
+                <div class="container h-100">
                   <div class="row align-items-center">
                     <div class="col-12 col-lg-6">
                       <div class="position-relative text-center">

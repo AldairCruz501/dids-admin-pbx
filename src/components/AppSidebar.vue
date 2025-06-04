@@ -20,7 +20,7 @@ const sidebar = useSidebarStore()
     <CSidebarHeader class="border-bottom">
       <RouterLink custom to="/" v-slot="{ href, navigate }">
         <CSidebarBrand v-bind="$attrs" as="a" :href="href" @click="navigate" class="text-center">
-          <CImage fluid :src="logo" class="img-fluid w-75"/>
+          <CImage fluid :src="logo" class="img-fluid p-3 p-lg-4"/>
         </CSidebarBrand>
       </RouterLink>
       <CCloseButton class="d-lg-none" dark @click="sidebar.toggleVisible()" />

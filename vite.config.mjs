@@ -71,7 +71,13 @@ export default defineConfig(() => {
     },
     server: {
       port: 3000,
-      proxy: {},
+      proxy: {
+        '/api': {
+          target: 'https://api.cero208.mx',
+          changeOrigin: true,
+          rewrite: path => path.replace(/^\/api/, ''),
+        },
+      },
     },
   }
 })

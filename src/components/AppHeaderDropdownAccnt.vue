@@ -38,7 +38,7 @@ const itemsCount = 42
       >
         Cuenta
       </CDropdownHeader>
-      <CDropdownItem> <CIcon icon="cil-user" /> Pérfil </CDropdownItem>
+      <CDropdownItem> <CIcon icon="cil-user" /> Perfil </CDropdownItem>
       <CDropdownItem> <CIcon icon="cil-settings" /> Configuración </CDropdownItem>
       <!-- <CDropdownItem>
         <CIcon icon="cil-dollar" /> Payments

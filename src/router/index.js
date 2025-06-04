@@ -37,18 +37,18 @@ const routes = [
         component: () => import('@/views/theme/Typography.vue'),
       },
       {
-        path: '/base',
-        name: 'Base',
+        path: '/dids',
+        name: 'DIDS',
         component: {
           render() {
             return h(resolveComponent('router-view'))
           },
         },
-        redirect: '/base/breadcrumbs',
+        redirect: '/dids/gestionar',
         children: [
           {
-            path: '/base/accordion',
-            name: 'Accordion',
+            path: '/dids/gestionar',
+            name: 'Gestionar',
             component: () => import('@/views/base/Accordion.vue'),
           },
           {
