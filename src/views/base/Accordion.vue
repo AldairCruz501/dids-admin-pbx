@@ -1,8 +1,8 @@
 <script setup>
 import { ref, computed } from 'vue'
+import axios from 'axios'
 import Multiselect from 'vue-multiselect'
 import Swal from 'sweetalert2'
-import api from '../../services/api'
 
 // Datos
 const selectedStates = ref([])
@@ -454,18 +454,26 @@ const phoneCodeOptions = [
 
 // Función para hacer la petición
 const fetchDids = async () => {
-  const stateCodes = selectedStates.value.map(s => s.code).join(',')
-  const phoneCodes = selectedCodes.value.map(p => p.code).join(',')
-
-  const params = { limit: 10 }
-
-  if (stateCodes) params['filter[state]'] = stateCodes
-  if (phoneCodes) params['filter[phone_code]'] = phoneCodes
-
+  loading.value = true
   try {
-    const response = await api.get('/did', { params })
+    const stateCodes = selectedStates.value.map(s => s.code).join(',')
+    const phoneCodes = selectedCodes.value.map(p => p.code).join(',')
+
+    const response = await axios.get('https://api.cero208.mx/did', {
+      headers: {
+        Authorization: 'Bearer inb-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJnQUFBQUFCb05rVEdnRGpUOHNHWmpnOFBSeXRFa1lvYlJSQThsbzIySWd1S3JkYldGVDdHMHk5d2xOdUNhNGdwQU9TcGd2WU5VQ3p5UEdyeUozTWIxNTE2cjJablI0QmlXUT09Iiwid2htY3MiOiJnQUFBQUFCb05rVEdfUEQyRlJRMHQ3WVJDZkg0bFdZNHl0b3podDZDUDNUYUtQdDhuYjh6VkNmVkxrNlhybnBjei1aRGpTU25RaUROLVJXRm12Vm1sSHNLb011SllxYUU1UT09IiwiaWF0IjoxNzQ4MzY1NDE0fQ.hP6K36wuE3ric0T641hCb4OPuu_aNCV5brQP0y39R2U',
+        Accept: 'application/json'
+      },
+      params: {
+        'filter[state]': stateCodes,
+        'filter[phone_code]': phoneCodes,
+        limit: 10
+      }
+    })
+
     results.value = response.data.data
 
+    // Mostrar alerta si no se encontraron DIDs
     if (results.value.length === 0) {
       Swal.fire({
         icon: 'info',
@@ -473,8 +481,9 @@ const fetchDids = async () => {
         text: 'No se encontraron DIDs con los filtros seleccionados.'
       })
     }
-  } catch (err) {
-    console.error('Error al obtener DIDs:', err)
+
+  } catch (error) {
+    console.error('Error al obtener DIDs:', error)
     Swal.fire({
       icon: 'error',
       title: 'Error',
@@ -484,7 +493,6 @@ const fetchDids = async () => {
     loading.value = false
   }
 }
-
 </script>
 
 <template>
