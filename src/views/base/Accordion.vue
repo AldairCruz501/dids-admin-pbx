@@ -1,4 +1,4 @@
-<!-- <script setup>
+<script setup>
 import { ref, computed } from 'vue'
 import api from '../../services/api'
 import Multiselect from 'vue-multiselect'
@@ -551,49 +551,4 @@ const fetchDids = async () => {
   </CCard>
 </template>
 
-<style src="vue-multiselect/dist/vue-multiselect.min.css"></style> -->
-
-
-<template>
-  <div class="container mt-5">
-    <h1 class="mb-4">Ping API</h1>
-    <button @click="fetchPing" class="btn btn-primary mb-3">Hacer Ping</button>
-
-    <div v-if="loading" class="text-info">Cargando...</div>
-    <div v-if="error" class="text-danger">Error: {{ error }}</div>
-    <div v-if="message" class="alert alert-success">
-      <strong>Mensaje:</strong> {{ message }}
-    </div>
-  </div>
-</template>
-
-<script setup>
-import { ref } from 'vue'
-import axios from 'axios'
-
-const message = ref('')
-const error = ref(null)
-const loading = ref(false)
-
-const fetchPing = async () => {
-  loading.value = true
-  error.value = null
-  message.value = ''
-
-  try {
-    const baseURL = import.meta.env.VITE_API_BASE_URL
-    const response = await axios.get(`${baseURL}/ping`)
-    message.value = response.data.message // Aquí accedemos a la propiedad `message`
-  } catch (err) {
-    error.value = err.message || 'Error desconocido'
-  } finally {
-    loading.value = false
-  }
-}
-</script>
-
-<style scoped>
-.container {
-  max-width: 600px;
-}
-</style>
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
