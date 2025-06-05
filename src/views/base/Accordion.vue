@@ -1,6 +1,6 @@
-<script setup>
+<!-- <script setup>
 import { ref, computed } from 'vue'
-import axios from 'axios'
+import api from '../../services/api'
 import Multiselect from 'vue-multiselect'
 import Swal from 'sweetalert2'
 
@@ -454,26 +454,18 @@ const phoneCodeOptions = [
 
 // Función para hacer la petición
 const fetchDids = async () => {
-  loading.value = true
+  const stateCodes = selectedStates.value.map(s => s.code).join(',')
+  const phoneCodes = selectedCodes.value.map(p => p.code).join(',')
+
+  const params = { limit: 10 }
+
+  if (stateCodes) params['filter[state]'] = stateCodes
+  if (phoneCodes) params['filter[phone_code]'] = phoneCodes
+
   try {
-    const stateCodes = selectedStates.value.map(s => s.code).join(',')
-    const phoneCodes = selectedCodes.value.map(p => p.code).join(',')
-
-    const response = await axios.get('https://api.cero208.mx/did', {
-      headers: {
-        Authorization: 'Bearer inb-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJnQUFBQUFCb05rVEdnRGpUOHNHWmpnOFBSeXRFa1lvYlJSQThsbzIySWd1S3JkYldGVDdHMHk5d2xOdUNhNGdwQU9TcGd2WU5VQ3p5UEdyeUozTWIxNTE2cjJablI0QmlXUT09Iiwid2htY3MiOiJnQUFBQUFCb05rVEdfUEQyRlJRMHQ3WVJDZkg0bFdZNHl0b3podDZDUDNUYUtQdDhuYjh6VkNmVkxrNlhybnBjei1aRGpTU25RaUROLVJXRm12Vm1sSHNLb011SllxYUU1UT09IiwiaWF0IjoxNzQ4MzY1NDE0fQ.hP6K36wuE3ric0T641hCb4OPuu_aNCV5brQP0y39R2U',
-        Accept: 'application/json'
-      },
-      params: {
-        'filter[state]': stateCodes,
-        'filter[phone_code]': phoneCodes,
-        limit: 10
-      }
-    })
-
+    const response = await api.get('/did', { params })
     results.value = response.data.data
 
-    // Mostrar alerta si no se encontraron DIDs
     if (results.value.length === 0) {
       Swal.fire({
         icon: 'info',
@@ -481,9 +473,8 @@ const fetchDids = async () => {
         text: 'No se encontraron DIDs con los filtros seleccionados.'
       })
     }
-
-  } catch (error) {
-    console.error('Error al obtener DIDs:', error)
+  } catch (err) {
+    console.error('Error al obtener DIDs:', err)
     Swal.fire({
       icon: 'error',
       title: 'Error',
@@ -560,4 +551,49 @@ const fetchDids = async () => {
   </CCard>
 </template>
 
-<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style> -->
+
+
+<template>
+  <div class="container mt-5">
+    <h1 class="mb-4">Ping API</h1>
+    <button @click="fetchPing" class="btn btn-primary mb-3">Hacer Ping</button>
+
+    <div v-if="loading" class="text-info">Cargando...</div>
+    <div v-if="error" class="text-danger">Error: {{ error }}</div>
+    <div v-if="message" class="alert alert-success">
+      <strong>Mensaje:</strong> {{ message }}
+    </div>
+  </div>
+</template>
+
+<script setup>
+import { ref } from 'vue'
+import axios from 'axios'
+
+const message = ref('')
+const error = ref(null)
+const loading = ref(false)
+
+const fetchPing = async () => {
+  loading.value = true
+  error.value = null
+  message.value = ''
+
+  try {
+    const baseURL = import.meta.env.VITE_API_BASE_URL
+    const response = await axios.get(`${baseURL}/ping`)
+    message.value = response.data.message // Aquí accedemos a la propiedad `message`
+  } catch (err) {
+    error.value = err.message || 'Error desconocido'
+  } finally {
+    loading.value = false
+  }
+}
+</script>
+
+<style scoped>
+.container {
+  max-width: 600px;
+}
+</style>
