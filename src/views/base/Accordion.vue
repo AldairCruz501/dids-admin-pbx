@@ -1,7 +1,8 @@
 <script setup>
 import { ref, computed } from 'vue'
-import axios from 'axios'
 import Multiselect from 'vue-multiselect'
+import Swal from 'sweetalert2'
+import api from '../../services/api'
 
 // Datos
 const selectedStates = ref([])
@@ -453,28 +454,37 @@ const phoneCodeOptions = [
 
 // Función para hacer la petición
 const fetchDids = async () => {
-  loading.value = true
+  const stateCodes = selectedStates.value.map(s => s.code).join(',')
+  const phoneCodes = selectedCodes.value.map(p => p.code).join(',')
+
+  const params = { limit: 10 }
+
+  if (stateCodes) params['filter[state]'] = stateCodes
+  if (phoneCodes) params['filter[phone_code]'] = phoneCodes
+
   try {
-    const stateCodes = selectedStates.value.map(s => s.code).join(',')
-    const phoneCodes = selectedCodes.value.map(p => p.code).join(',')
-    const response = await axios.get('/api/did', {
-      headers: {
-        Authorization: 'Bearer inb-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJnQUFBQUFCb05rVEdnRGpUOHNHWmpnOFBSeXRFa1lvYlJSQThsbzIySWd1S3JkYldGVDdHMHk5d2xOdUNhNGdwQU9TcGd2WU5VQ3p5UEdyeUozTWIxNTE2cjJablI0QmlXUT09Iiwid2htY3MiOiJnQUFBQUFCb05rVEdfUEQyRlJRMHQ3WVJDZkg0bFdZNHl0b3podDZDUDNUYUtQdDhuYjh6VkNmVkxrNlhybnBjei1aRGpTU25RaUROLVJXRm12Vm1sSHNLb011SllxYUU1UT09IiwiaWF0IjoxNzQ4MzY1NDE0fQ.hP6K36wuE3ric0T641hCb4OPuu_aNCV5brQP0y39R2U',
-        Accept: 'application/json'
-      },
-      params: {
-        'filter[state]': stateCodes,
-        'filter[phone_code]': phoneCodes,
-        limit: 10
-      }
-    })
+    const response = await api.get('/did', { params })
     results.value = response.data.data
-  } catch (error) {
-    console.error('Error al obtener DIDs:', error)
+
+    if (results.value.length === 0) {
+      Swal.fire({
+        icon: 'info',
+        title: 'Sin resultados',
+        text: 'No se encontraron DIDs con los filtros seleccionados.'
+      })
+    }
+  } catch (err) {
+    console.error('Error al obtener DIDs:', err)
+    Swal.fire({
+      icon: 'error',
+      title: 'Error',
+      text: 'Ocurrió un error al obtener los DIDs. Intenta nuevamente.'
+    })
   } finally {
     loading.value = false
   }
 }
+
 </script>
 
 <template>
@@ -483,6 +493,9 @@ const fetchDids = async () => {
       Buscar DIDS Disponibles
     </CCardHeader>
     <CCardBody>
+      <div class="mt-1 mb-3">
+        <span class="fst-italic fs-6 text-secondary">Busca los DIDS Disponibles ya sea por el Código Telefónico o por Estados de la República Mexicana.</span>
+      </div>
       <div class="row g-5">
         <div class="col-md-6 col-lg-4">
           <label>Códigos Telefónicos</label>
