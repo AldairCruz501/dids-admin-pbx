@@ -77,11 +77,6 @@ export default defineConfig(() => {
           changeOrigin: true,
           rewrite: path => path.replace(/^\/api/, ''),
         },
-        '/ping': {
-          target: 'https://api.cero208.mx',
-          changeOrigin: true,
-          rewrite: (path) => path.replace(/^\/ping/, '/ping'),
-        },
       },
     },
   }
