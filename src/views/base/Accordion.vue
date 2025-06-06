@@ -462,8 +462,12 @@ const fetchDids = async () => {
   if (stateCodes) params['filter[state]'] = stateCodes
   if (phoneCodes) params['filter[phone_code]'] = phoneCodes
 
+  console.log('Enviando params:', params) // 👈 Log de depuración
+
   try {
     const response = await api.get('/did', { params })
+    console.log('Respuesta completa:', response) // 👈 Log de respuesta
+
     results.value = response.data.data
 
     if (results.value.length === 0) {
@@ -474,7 +478,8 @@ const fetchDids = async () => {
       })
     }
   } catch (err) {
-    console.error('Error al obtener DIDs:', err)
+    console.error('Error al obtener DIDs:', err.response?.data || err.message) // 👈 Log de error más informativo
+
     Swal.fire({
       icon: 'error',
       title: 'Error',
