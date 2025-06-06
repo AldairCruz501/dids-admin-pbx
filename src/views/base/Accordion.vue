@@ -454,36 +454,44 @@ const phoneCodeOptions = [
 
 // Función para hacer la petición
 const fetchDids = async () => {
-  const stateCodes = selectedStates.value.map(s => s.code).join(',')
-  const phoneCodes = selectedCodes.value.map(p => p.code).join(',')
+  const stateCodes = selectedStates.value.map(s => s.code).join(',');
+  const phoneCodes = selectedCodes.value.map(p => p.code).join(',');
 
-  const params = { limit: 10 }
+  const params = { limit: 10 };
 
-  if (stateCodes) params['filter[state]'] = stateCodes
-  if (phoneCodes) params['filter[phone_code]'] = phoneCodes
+  if (stateCodes) params['filter[state]'] = stateCodes;
+  if (phoneCodes) params['filter[phone_code]'] = phoneCodes;
 
   try {
-    const response = await api.get('/did', { params })
-    results.value = response.data.data
+    const response = await api.get('/did', {
+      params,
+      headers: {
+        Authorization: `Bearer ${import.meta.env.VITE_API_TOKEN}`,
+        Accept: 'application/json'
+      }
+    });
+
+    results.value = response.data.data;
 
     if (results.value.length === 0) {
       Swal.fire({
         icon: 'info',
         title: 'Sin resultados',
         text: 'No se encontraron DIDs con los filtros seleccionados.'
-      })
+      });
     }
   } catch (err) {
-    console.error('Error al obtener DIDs:', err)
+    console.error('Error al obtener DIDs:', err);
     Swal.fire({
       icon: 'error',
       title: 'Error',
       text: 'Ocurrió un error al obtener los DIDs. Intenta nuevamente.'
-    })
+    });
   } finally {
-    loading.value = false
+    loading.value = false;
   }
-}
+};
+
 </script>
 
 <template>
