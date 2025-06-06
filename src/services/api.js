@@ -4,12 +4,16 @@ import axios from 'axios'
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL,
   headers: {
-    Authorization: `Bearer ${import.meta.env.VITE_API_TOKEN}`,
     Accept: 'application/json'
   }
 })
 
-console.log(import.meta.env.VITE_API_BASE_URL)
-console.log(import.meta.env.VITE_API_TOKEN)
+api.interceptors.request.use(config => {
+  const token = import.meta.env.VITE_API_TOKEN
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`
+  }
+  return config
+})
 
 export default api
