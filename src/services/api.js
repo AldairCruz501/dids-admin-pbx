@@ -9,4 +9,7 @@ const api = axios.create({
   }
 })
 
+console.log(import.meta.env.VITE_API_BASE_URL)
+console.log(import.meta.env.VITE_API_TOKEN)
+
 export default api
