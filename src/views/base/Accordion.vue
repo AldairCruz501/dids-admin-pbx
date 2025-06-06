@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { ref} from 'vue'
 import api from '../../services/api'
 import Multiselect from 'vue-multiselect'
 import Swal from 'sweetalert2'
@@ -458,6 +458,9 @@ const fetchDids = async () => {
   const phoneCodes = selectedCodes.value.map(p => p.code).join(',')
 
   const params = { limit: 10 }
+
+  console.log('Request params:', params)
+  console.log('Request headers:', api.defaults.headers)
 
   if (stateCodes) params['filter[state]'] = stateCodes
   if (phoneCodes) params['filter[phone_code]'] = phoneCodes
